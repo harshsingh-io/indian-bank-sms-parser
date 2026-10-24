@@ -190,6 +190,18 @@ erases types but never generates code. That rules out parameter properties,
 enums, namespaces and decorators — the source avoids all four. On older Node,
 or in a browser, run it through any bundler; there is nothing to configure.
 
+## SMS is not the whole record
+
+Worth knowing before you build on this. Measured on one real SBI account over
+six months, **10% of transactions produced an SMS** — a bank texts you about
+what it considers worth a text. For an alert-heavy account like a credit card
+that is nearly everything; for a savings account it can be almost nothing.
+
+If you are reconciling rather than just noticing, you want the statements too:
+[indian-bank-statements](https://github.com/harshsingh-io/indian-bank-statement-parser)
+reads the encrypted PDF, the netbanking `.xlsx` and the card `.CSV`, and
+checks every row against the bank's own running balance.
+
 ## Scope
 
 **Does:** one SMS in, one transaction out. Amount, direction, channel, account
