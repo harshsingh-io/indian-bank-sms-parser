@@ -97,6 +97,38 @@ toPaise('180.5');      // 18050  — padded right, not left
 format(123450);        // "1234.50"
 ```
 
+## Does your bank parse? Find out without writing code
+
+```bash
+npx indian-bank-sms-parser "<paste your SMS here>"
+```
+
+If it parses, you get the transaction. If it does not — or if only the
+generic fallback matched, which gets the payee wrong more often than not —
+you get your message back with **every identifying value replaced**, plus a
+fixture ready to drop into `tests/`. That is all a new bank needs to get
+started.
+
+```
+  ---- masked message ----
+  Dear Customer, Rs.1,111.11 has been debited from your Kotak Bank
+  A/c XX1001 on 23-Oct-26 towards UPI/DR/100000000001/A PAYEE/KKBK.
+  ------------------------
+
+  CHECK THESE before you post. They are capitalised words this did
+  not recognise, and one of them may be a name:
+
+    KKBK
+```
+
+The shape survives — the bank name, the date, the `UPI/DR/` rail a profile
+matches on — while the account, the reference, the amount, the phone number
+and the payee do not. Anything it could not classify is listed for you rather
+than assumed safe.
+
+**Nothing is uploaded.** The command makes no network calls; it prints the
+masked text for you to check and paste yourself.
+
 ## Banks included
 
 | Profile | Covers |

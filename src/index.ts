@@ -31,6 +31,7 @@ export { toPaise, tryToPaise, format } from './money.ts';
 export { readBalance, reconcile } from './balance.ts';
 export type { BalanceReading, Reconciliation, Movement } from './balance.ts';
 export { compile as compilePattern } from './regex.ts';
+export { mask } from './mask.ts';
 
 /**
  * Every profile that ships with this package.
