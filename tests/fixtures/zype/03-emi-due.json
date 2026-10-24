@@ -1,0 +1,9 @@
+{
+  "name": "an EMI due reminder is not a payment",
+  "sender": "ZYPEIN-S(smsft)",
+  "text": "Dear customer, your Zype EMI of Rs.941 is due on 05 July 2026 - Zype",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

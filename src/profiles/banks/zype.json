@@ -1,0 +1,55 @@
+{
+  "bank": "Zype",
+  "id": "zype",
+  "senders": [
+    "ZYPE"
+  ],
+  "generic_fallback": false,
+  "shortcut_keywords": [],
+  "_comment": [
+    "Zype sends EMI reminders and auto-debit notices, never a completed payment.",
+    "The actual debit shows up on the funding bank and is captured there.",
+    "This profile exists only so those reminders are labelled precisely instead",
+    "of being lumped in as sender_not_allowed."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)(EMI\\s+payment|overdue\\s+interest|late\\s+payment\\s+penalty)",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)Pay\\s+Now\\s*:",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)credit\\s+line|loan\\s+(is\\s+)?(approved|ready|available)",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)EMI\\s+of\\s+Rs\\.?\\s?[\\d,]+\\s+is\\s+due",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)\\bis\\s+due\\s+on\\b",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)statement\\s+has\\s+been\\s+generated",
+      "reason": "not_transaction"
+    }
+  ],
+  "templates": [
+    {
+      "id": "zype-disbursal",
+      "_note": "Dear customer, Rs.7500 Zype loan was successfully transferred to your registered bank account ending 0000 - Zype",
+      "detect": "(?i)Zype\\s+loan\\s+was\\s+successfully\\s+transferred",
+      "direction": "credit",
+      "channel": "transfer",
+      "fields": {
+        "amount": "(?i)Rs\\.?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)\\s+Zype\\s+loan",
+        "payee": "(?i)(?<payee>Zype)\\s+loan\\s+was\\s+successfully",
+        "account": "(?i)account\\s+ending\\s+(?<account>\\d{4})"
+      }
+    }
+  ]
+}

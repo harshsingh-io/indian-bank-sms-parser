@@ -1,0 +1,15 @@
+{
+  "name": "atm withdrawal",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.2,000.00 withdrawn from Example Bank A/C *1234 at ATM on 16/09/26. Ref 600000000006",
+  "expect": {
+    "status": "parsed",
+    "profile": "exbank/exbank-atm",
+    "direction": "debit",
+    "channel": "atm",
+    "amount_paise": 200000,
+    "account": "1234",
+    "payee": null,
+    "ref": "600000000006"
+  }
+}

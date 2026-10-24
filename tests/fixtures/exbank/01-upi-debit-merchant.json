@@ -1,0 +1,15 @@
+{
+  "name": "upi debit to merchant",
+  "sender": "AX-EXBANK-S",
+  "text": "Sent Rs.180.00\nFrom Example Bank A/C *1234\nTo AAHARA CAFE\nOn 16/09/26\nRef 600000000001",
+  "expect": {
+    "status": "parsed",
+    "profile": "exbank/exbank-upi-debit",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 18000,
+    "account": "1234",
+    "payee": "AAHARA CAFE",
+    "ref": "600000000001"
+  }
+}

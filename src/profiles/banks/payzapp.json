@@ -1,0 +1,76 @@
+{
+  "bank": "PayZapp Wallet (HDFC)",
+  "id": "payzapp",
+  "senders": [
+    "PAYZAP"
+  ],
+  "generic_fallback": false,
+  "shortcut_keywords": [
+    "credited to your PayZapp Wallet",
+    "debited from your PayZapp Wallet"
+  ],
+  "_comment": [
+    "HDFC's wallet. Written from 32 real messages, Oct 2025 onward.",
+    "",
+    "DOUBLE-COUNT WARNING. A wallet has two kinds of movement:",
+    "  load  -- money entering the wallet from a bank or card. NOT income.",
+    "  spend -- money leaving the wallet. This is the real expense.",
+    "Counting a load as income inflates both sides of the books. The load is",
+    "given a merchant ('PayZapp Wallet') precisely so a consumer can attach an",
+    "'always: transfer' rule to it, the same treatment as an ICICI card bill.",
+    "",
+    "Checked against this owner's data: none of the 5 wallet loads matched an",
+    "HDFC debit of the same amount within 24h, so the funding side is not in",
+    "the SMS corpus. Re-check if a bank profile is added later.",
+    "",
+    "A wallet SPEND names no merchant at all -- 'Rs.60 debited from your PayZapp",
+    "Wallet on ...' and nothing more. Leaving payee null is the honest result:",
+    "these stay `pending` for manual categorization rather than being filed",
+    "under a merchant we never actually learned."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)bill\\s+of\\s+Rs\\.?\\s?[\\d,.]+\\s+is\\s+(generated|due)",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)Login\\s+attempt",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)will\\s+be\\s+deactivated",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)transactions\\s+on\\s+your\\s+PayZapp\\s+wallet\\s+have\\s+been",
+      "reason": "not_transaction"
+    }
+  ],
+  "templates": [
+    {
+      "id": "payzapp-wallet-spend",
+      "_note": "Rs.60 debited from your PayZapp Wallet on 08-10-2025 13:37:29 / Bal: Rs.2440",
+      "detect": "(?i)debited\\s+from\\s+your\\s+PayZapp\\s+Wallet",
+      "direction": "debit",
+      "channel": "wallet",
+      "fields": {
+        "amount": "(?im)^Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-\\d{2}-\\d{4})"
+      },
+      "date_format": "d-m-Y"
+    },
+    {
+      "id": "payzapp-wallet-load",
+      "_note": "Rs.2500 / credited to your PayZapp Wallet / On 08-10-2025 13:37:18 / Bal:Rs.2500",
+      "detect": "(?i)credited\\s+to\\s+your\\s+PayZapp\\s+Wallet",
+      "direction": "credit",
+      "channel": "wallet",
+      "fields": {
+        "amount": "(?im)^Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)credited\\s+to\\s+your\\s+(?<payee>PayZapp\\s+Wallet)",
+        "date": "(?im)^On\\s+(?<date>\\d{2}-\\d{2}-\\d{4})"
+      },
+      "date_format": "d-m-Y"
+    }
+  ]
+}

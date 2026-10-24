@@ -1,0 +1,16 @@
+{
+  "name": "credit card spend, limit stripped",
+  "sender": "ICICIT-S(smsft)",
+  "received_at": "2026-02-19 14:31:00 +05:30",
+  "text": "INR 2,995.00 spent using ICICI Bank Card XX1005 on 19-Feb-26 on EXAMPLE STORE E. Avl Limit: INR 87,005.00. If not you, call 1800 2662/SMS BLOCK 6009 to 9215676766.",
+  "expect": {
+    "status": "parsed",
+    "profile": "icici/icici-card-spend",
+    "direction": "debit",
+    "channel": "card",
+    "amount_paise": 299500,
+    "account": "1005",
+    "payee": "EXAMPLE STORE E",
+    "no_balance_in_text": true
+  }
+}

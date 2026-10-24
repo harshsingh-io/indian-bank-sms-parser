@@ -1,0 +1,12 @@
+{
+  "name": "sms delayed more than two days uses the date inside it",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2025-10-08 09:00:00 +05:30",
+  "text": "Sent Rs.99.00\nFrom HDFC Bank A/C *1001\nTo INDIGO SALON\nOn 02/10/25\nRef 100000000099\nNot You?\nCall 18001234567/SMS BLOCK UPI to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "amount_paise": 9900,
+    "occurred_at": "2025-10-02 12:00:00 +05:30"
+  }
+}

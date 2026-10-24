@@ -1,0 +1,15 @@
+{
+  "name": "cash deposit at branch, balance stripped",
+  "sender": "CBSSBI-S(smsft)",
+  "received_at": "2026-01-28 13:00:00 +05:30",
+  "text": "Your A/C XXXXX100002 Credited INR 31,700.00 on 28/01/26 -Deposited by Cash by SELF. Avl Bal INR 34,302.79-SBI",
+  "expect": {
+    "status": "parsed",
+    "profile": "sbi/sbi-cash-deposit",
+    "direction": "credit",
+    "amount_paise": 3170000,
+    "account": "100002",
+    "payee": "Cash by SELF",
+    "no_balance_in_text": true
+  }
+}

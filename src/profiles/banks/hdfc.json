@@ -1,0 +1,216 @@
+{
+  "bank": "HDFC Bank",
+  "id": "hdfc",
+  "senders": [
+    "HDFCBK"
+  ],
+  "shortcut_keywords": [
+    "Sent Rs",
+    "Credit Alert",
+    "Spent Rs",
+    "Withdrawn Rs",
+    "debited"
+  ],
+  "_comment": [
+    "Written from ~1200 real masked HDFC messages spanning Oct 2025 - Sep 2026.",
+    "Text has already been normalized, which rewrites every ₹ / Rs / Rs. / INR to",
+    "a literal 'Rs.' immediately before the digits, so patterns only ever see 'Rs.'.",
+    "Template order matters: the first whose detect matches wins, so the narrow",
+    "card and ATM forms are listed before the broad UPI one.",
+    "",
+    "VERIFIED AGAINST THE BANK STATEMENT. Two message types were being thrown",
+    "away that are the ONLY notification of a real movement:",
+    "  - 'SIP Txn Successful' is a mutual-fund debit. 56 of them matched 56",
+    "    O-MF- rows on the statement exactly. Only the 'Smart Move / registered'",
+    "    form is a non-event, so the ignore now names that form specifically.",
+    "  - 'Update! INR X deposited ... for NEFT Cr-' is salary. The bank sends no",
+    "    other SMS for it.",
+    "Do NOT add a bare 'SmartWealth' ignore: that is the app name and appears on",
+    "the successful-SIP message too, which silently discarded every SIP debit."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)SIP\\s+request\\s+is\\s+registered",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)Smart\\s+Move",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)\\btxns?\\s+on\\s+Non\\s+HDFC",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)two-step\\s+verification",
+      "reason": "not_transaction"
+    }
+  ],
+  "templates": [
+    {
+      "id": "hdfc-cc-spend",
+      "_note": "Spent Rs.2049 On HDFC Bank Card 1001 At MERCHANT On 2025-11-11:11:04:40",
+      "detect": "(?im)^Spent\\s+Rs\\.[\\d,.]+\\s+On\\s+HDFC\\s+Bank\\s+Card",
+      "direction": "debit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)Card\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bAt\\s+(?<payee>.+?)\\s+On\\s+\\d{4}-\\d{2}-\\d{2}",
+        "date": "(?i)On\\s+(?<date>\\d{4}-\\d{2}-\\d{2}):\\d{2}:\\d{2}:\\d{2}"
+      },
+      "date_format": "Y-m-d"
+    },
+    {
+      "id": "hdfc-dc-spend",
+      "_note": "Spent Rs.2 From MERCHANT On 2025-12-16:09:40:54 Bal Rs.95853.26",
+      "detect": "(?im)^Spent\\s+Rs\\.[\\d,.]+\\s+From\\s+",
+      "direction": "debit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)^Spent\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)\\bFrom\\s+(?<payee>.+?)\\s+On\\s+\\d{4}-\\d{2}-\\d{2}",
+        "date": "(?i)On\\s+(?<date>\\d{4}-\\d{2}-\\d{2}):\\d{2}:\\d{2}:\\d{2}"
+      },
+      "date_format": "Y-m-d"
+    },
+    {
+      "id": "hdfc-atm",
+      "_note": "Withdrawn Rs.800 From HDFC Bank Card x1002 At LOCATION On 2025-10-24:21:06:54 Bal Rs.40043.08",
+      "detect": "(?im)^Withdrawn\\s+Rs\\.",
+      "direction": "debit",
+      "channel": "atm",
+      "fields": {
+        "amount": "(?i)^Withdrawn\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)Card\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bAt\\s+(?<payee>.+?)\\s+On\\s+\\d{4}-\\d{2}-\\d{2}",
+        "date": "(?i)On\\s+(?<date>\\d{4}-\\d{2}-\\d{2}):\\d{2}:\\d{2}:\\d{2}"
+      },
+      "date_format": "Y-m-d"
+    },
+    {
+      "id": "hdfc-credit-alert",
+      "_note": "Credit Alert!\\nRs.140.00 credited to HDFC Bank A/c XX1001 on 03-10-25 from VPA name@bank (UPI 1000...)",
+      "detect": "(?im)^Credit\\s+Alert",
+      "direction": "credit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?c\\s*[xX*]*(?<account>\\d{3,4})",
+        "vpa": "(?i)VPA\\s+(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "payee": "(?i)from\\s+VPA\\s+(?<payee>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?i)\\(UPI\\s*(?:Ref\\s*No\\.?)?\\s*(?<ref>\\d{9,20})\\)",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-\\d{2}-\\d{2})\\b"
+      },
+      "date_format": "d-m-y"
+    },
+    {
+      "id": "hdfc-imps-credit",
+      "_note": "Received!\\nRs.5,000.00 in HDFC Bank A/c xx1001\\nOn 17-10-25\\nFor IMPS -SENDER- 1000...",
+      "detect": "(?im)^Received!",
+      "direction": "credit",
+      "channel": "imps",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?c\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?im)^For\\s+\\w+\\s*-\\s*(?<payee>.+?)\\s*-\\s*\\d+\\s*$",
+        "ref": "(?im)^For\\s+[^\\n]*?-\\s*(?<ref>\\d{9,20})\\s*$",
+        "date": "(?im)^On\\s+(?<date>\\d{2}-\\d{2}-\\d{2})$"
+      },
+      "date_format": "d-m-y"
+    },
+    {
+      "id": "hdfc-imps-debit",
+      "_note": "IMPS Rs.10,000.00\\nsent from HDFC Bank A/c XX1001 on 10-09-26\\nTo A/c xxxxxxxxxx1007\\nRef-1000...",
+      "detect": "(?im)^IMPS\\s+Rs\\.",
+      "direction": "debit",
+      "channel": "imps",
+      "fields": {
+        "amount": "(?im)^IMPS\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)sent\\s+from\\s+HDFC\\s+Bank\\s+A\\/?c\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?im)^To\\s+A\\/?c\\s*[xX*]*(?<payee>\\d{3,4})",
+        "ref": "(?i)Ref-?\\s*(?<ref>\\d{9,20})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-\\d{2}-\\d{2})\\b"
+      },
+      "date_format": "d-m-y"
+    },
+    {
+      "id": "hdfc-acct-transfer",
+      "_note": "HDFC Bank:Rs. 14000.00 debited from a/c *1003 on 01/02/26 to a/c **1004 (UPI Ref No. 1000...)",
+      "detect": "(?i)debited\\s+from\\s+a\\/?c[^\\n]*\\bto\\s+a\\/?c\\b",
+      "direction": "debit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)debited\\s+from\\s+a\\/?c\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bto\\s+a\\/?c\\s*[xX*]*(?<payee>\\d{3,4})",
+        "ref": "(?i)UPI\\s*Ref\\s*No\\.?\\s*(?<ref>\\d{9,20})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})\\b"
+      },
+      "date_format": "d/m/y"
+    },
+    {
+      "id": "hdfc-netbanking-debit",
+      "_note": "UPDATE: Rs.12,500.00 debited from HDFC Bank XX1001 on 08-JAN-26. Info: ... Avl bal:Rs.99,999.99",
+      "detect": "(?im)^UPDATE:\\s*Rs\\.[\\d,.]+\\s+debited",
+      "direction": "debit",
+      "channel": "netbanking",
+      "fields": {
+        "amount": "(?i)^UPDATE:\\s*Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)debited\\s+from\\s+[^\\n]*?[xX*]{2,}(?<account>\\d{3,4})",
+        "payee": "(?i)Info:\\s*(?<payee>[A-Za-z][A-Za-z .&'-]{1,40}?)\\s*(?=[\\d/]|$)",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "hdfc-sip-debit",
+      "_note": "SIP Txn Successful!\\nYour Monthly SIP for Rs.1000.0 placed on 23/05/2026 in MF HDFC Focused Fund.",
+      "detect": "(?im)^SIP\\s+Txn\\s+Successful",
+      "direction": "debit",
+      "channel": "netbanking",
+      "fields": {
+        "amount": "(?i)SIP\\s+for\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)\\bin\\s+MF\\s+(?<payee>[^.\\n]{2,50})",
+        "date": "(?i)placed\\s+on\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{4})"
+      },
+      "date_format": "d/m/Y"
+    },
+    {
+      "id": "hdfc-neft-credit",
+      "_note": "Update! Rs.50,000.00 deposited in HDFC Bank A/c XX1001 on 01-NOV-25 for NEFT Cr-IFSC-PAYER NAME-...-REF. Avl bal ...",
+      "detect": "(?i)deposited\\s+in\\s+HDFC\\s+Bank\\s+A\\/?c",
+      "direction": "credit",
+      "channel": "netbanking",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)\\s+deposited",
+        "account": "(?i)deposited\\s+in\\s+HDFC\\s+Bank\\s+A\\/?c\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)for\\s+(?:NEFT|IMPS|RTGS)\\s*Cr-[A-Z0-9]+-(?<payee>[^-\\n]{2,50})-",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "hdfc-upi-debit",
+      "_note": "Sent Rs.24.00\\nFrom HDFC Bank A/C *1001\\nTo PAYEE\\nOn 01/01/26\\nRef 1000...  (the common case)",
+      "detect": "(?im)^Sent\\s+Rs\\.",
+      "direction": "debit",
+      "channel": "upi",
+      "ignore": [
+        {
+          "pattern": "(?i)will\\s+be\\s+(debited|deducted)",
+          "reason": "pre_debit_notice"
+        }
+      ],
+      "fields": {
+        "amount": "(?im)^Sent\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?im)^To\\s+(?<payee>.+)$",
+        "vpa": "(?i)(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?im)^Ref\\s*(?:No\\.?)?\\s*(?<ref>\\d{9,20})",
+        "date": "(?im)^On\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})$"
+      },
+      "date_format": "d/m/y"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "a reversed card transaction is money coming back",
+  "sender": "ICICIT-S(smsft)",
+  "text": "Dear Customer, your transaction of Rs.3,587.00 on ICICI Bank Credit Card XX1001 at FITNESS STUDIO dated 08-Aug-26 at 19:31:50 PM has been reversed. A credit will reflect shortly.",
+  "expect": {
+    "status": "parsed",
+    "profile": "icici/icici-reversal",
+    "amount_paise": 358700,
+    "direction": "credit",
+    "payee": "FITNESS STUDIO",
+    "account": "1001"
+  }
+}

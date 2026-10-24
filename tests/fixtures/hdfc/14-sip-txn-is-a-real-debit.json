@@ -1,0 +1,14 @@
+{
+  "name": "a successful SIP is a real debit, even though it names the SmartWealth app",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2026-05-23 10:00:00 +05:30",
+  "text": "SIP Txn Successful!\nYour Monthly SIP for Rs.1000.0 placed on 23/05/2026 in MF EXAMPLE FOCUSED FUND.\nFor details login to HDFC Bank SmartWealth.",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-sip-debit",
+    "direction": "debit",
+    "channel": "netbanking",
+    "amount_paise": 100000,
+    "payee": "EXAMPLE FOCUSED FUND"
+  }
+}

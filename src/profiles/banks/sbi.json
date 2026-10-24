@@ -1,0 +1,103 @@
+{
+  "bank": "State Bank of India",
+  "id": "sbi",
+  "senders": ["SBI"],
+  "shortcut_keywords": ["debited by", "credited by", "trf to", "Credited INR"],
+  "_comment": [
+    "Written from 37 real non-OTP SBI messages spanning Oct 2025 - Aug 2026.",
+    "SBI uses at least 17 sender variants (SBIUPI, SBIINB, SBIBNK, CBSSBI,",
+    "SBIPSG ...), each with its own route decoration, so the allowlist matches",
+    "the substring 'SBI' rather than trying to enumerate them.",
+    "",
+    "THE THING THAT MAKES SBI DIFFERENT: it often writes the amount with no",
+    "currency marker at all -- 'debited by 305.0', not 'debited by Rs.305.00'.",
+    "Normalization only rewrites an existing marker, so it cannot help here and",
+    "every amount pattern below has to treat 'Rs.' as optional. A pattern copied",
+    "from another bank will silently extract nothing.",
+    "Note also '305.0' means 305 rupees 0 paise, which Money::toPaise handles by",
+    "padding the fraction on the right."
+  ],
+  "ignore": [
+    { "pattern": "(?i)has\\s+requested\\s+Rs\\.?[\\d,]", "reason": "pre_debit_notice" },
+    { "pattern": "(?i)\\bUr\\s+\\d+(?:st|nd|rd|th)\\s+UPI\\s+Txn", "reason": "not_transaction" },
+    { "pattern": "(?i)Money\\s+will\\s+always\\s+be\\s+deducted", "reason": "not_transaction" },
+    { "pattern": "(?i)could\\s+not\\s+be\\s+issued", "reason": "not_transaction" },
+    { "pattern": "(?i)(YONO|PMSBY|Beware\\s+of\\s+fraudsters|cyber\\s+hygiene|revoke\\s+the\\s+consent)", "reason": "not_transaction" }
+  ],
+  "templates": [
+    {
+      "id": "sbi-upi-debit",
+      "_note": "Dear UPI user A/C X1001 debited by 305.0 on date 08Oct25 trf to PAYEE Refno 1000... (amount has no Rs)",
+      "detect": "(?i)debited\\s+by\\s+(?:Rs\\.)?\\s?[\\d,]+[^\\n]*\\btrf\\s+to\\b",
+      "direction": "debit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)debited\\s+by\\s+(?:Rs\\.)?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[xX*]*(?<account>\\d{3,6})",
+        "payee": "(?i)\\btrf\\s+to\\s+(?<payee>.+?)\\s+Refno\\b",
+        "ref": "(?i)Refno\\.?\\s*(?<ref>\\d{6,20})",
+        "date": "(?i)on\\s+date\\s+(?<date>\\d{2}[A-Za-z]{3}\\d{2})"
+      },
+      "date_format": "dMy"
+    },
+    {
+      "id": "sbi-upi-credit",
+      "_note": "Dear SBI User, your A/c X1003-credited by Rs.90 on 28Apr26 transfer from PAYEE Ref No 1000...",
+      "detect": "(?i)credited\\s+by\\s+(?:Rs\\.)?\\s?[\\d,]+[^\\n]*\\btransfer\\s+from\\b",
+      "direction": "credit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)credited\\s+by\\s+(?:Rs\\.)?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?c\\s*[xX*]*(?<account>\\d{3,6})\\s*-?\\s*credited",
+        "payee": "(?i)\\btransfer\\s+from\\s+(?<payee>.+?)\\s+Ref\\s*No\\b",
+        "ref": "(?i)Ref\\s*No\\.?\\s*(?<ref>\\d{6,20})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}[A-Za-z]{3}\\d{2})\\b"
+      },
+      "date_format": "dMy"
+    },
+    {
+      "id": "sbi-imps-credit",
+      "_note": "Your a/c no. XXXXXXXX4338 is credited by Rs.2.00 on 17-04-26 by a/c linked to mobile 1XXXXXX111-SENDER (IMPS Ref# 1000...)",
+      "detect": "(?i)is\\s+credited\\s+by\\s+(?:Rs\\.)?\\s?[\\d,]+[^\\n]*\\blinked\\s+to\\s+mobile\\b",
+      "direction": "credit",
+      "channel": "imps",
+      "fields": {
+        "amount": "(?i)is\\s+credited\\s+by\\s+(?:Rs\\.)?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)a\\/?c\\s+no\\.?\\s*[xX*]*(?<account>\\d{3,6})",
+        "payee": "(?i)linked\\s+to\\s+mobile\\s+[\\dxX]+\\s*-\\s*(?<payee>[^(\\n]+?)\\s*\\(",
+        "ref": "(?i)IMPS\\s*Ref\\s*#?\\s*(?<ref>\\d{6,20})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}-\\d{2}-\\d{2})\\b"
+      },
+      "date_format": "d-m-y"
+    },
+    {
+      "id": "sbi-cash-deposit",
+      "_note": "Your A/C XXXXX100002 Credited Rs.31,700.00 on 28/01/26 -Deposited by Cash by SELF. Avl Bal ...",
+      "detect": "(?i)Credited\\s+(?:Rs\\.)?\\s?[\\d,]+[^\\n]*-\\s*Deposited\\s+by\\b",
+      "direction": "credit",
+      "channel": "other",
+      "fields": {
+        "amount": "(?i)Credited\\s+(?:Rs\\.)?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[xX*]*(?<account>\\d{3,6})",
+        "payee": "(?i)-\\s*Deposited\\s+by\\s+(?<payee>[^.\\n]+?)(?=\\s*(?:Avl|\\.|$))",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})\\b"
+      },
+      "date_format": "d/m/y"
+    },
+    {
+      "id": "sbi-upi-reversal",
+      "_note": "Your A/C XXXXX100002 has credit for UPI/REVERSAL/1000.../0112 of Rs 2.00 on 03/12/25. Avl Bal ...",
+      "detect": "(?i)has\\s+credit\\s+for\\s+UPI\\/REVERSAL",
+      "direction": "credit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)\\bof\\s+(?:Rs\\.)?\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[xX*]*(?<account>\\d{3,6})",
+        "payee": "(?i)(?<payee>UPI\\/REVERSAL)",
+        "ref": "(?i)UPI\\/REVERSAL\\/(?<ref>\\d{6,20})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})\\b"
+      },
+      "date_format": "d/m/y"
+    }
+  ]
+}

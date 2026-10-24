@@ -1,0 +1,16 @@
+{
+  "name": "upi credit received from a person",
+  "sender": "SBIUPI-S(smsft)",
+  "received_at": "2026-04-28 09:15:00 +05:30",
+  "text": "Dear SBI User, your A/c X1003-credited by Rs.90 on 28Apr26 transfer from HILLSIDE DINER Ref No 100000000011 -SBI",
+  "expect": {
+    "status": "parsed",
+    "profile": "sbi/sbi-upi-credit",
+    "direction": "credit",
+    "channel": "upi",
+    "amount_paise": 9000,
+    "account": "1003",
+    "payee": "HILLSIDE DINER",
+    "ref": "100000000011"
+  }
+}

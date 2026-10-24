@@ -1,0 +1,9 @@
+{
+  "name": "statement and amount due are not transactions",
+  "sender": "ICICIT-S(smsft)",
+  "text": "ICICI Bank Credit Card XX1005 Statement is sent to yo************me@example.com. Total of Rs 5,227.02 or minimum of Rs 270.00 is due by 30-MAR-26.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "upi debit to merchant",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2025-10-02 08:09:00 +05:30",
+  "text": "Sent Rs.750.00\nFrom HDFC Bank A/C *1001\nTo AAHARA CAFE\nOn 02/10/25\nRef 100000000001\nNot You?\nCall 18001234567/SMS BLOCK UPI to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-upi-debit",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 75000,
+    "account": "1001",
+    "payee": "AAHARA CAFE",
+    "ref": "100000000001"
+  }
+}

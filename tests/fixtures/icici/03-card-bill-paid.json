@@ -1,0 +1,15 @@
+{
+  "name": "paying your own card bill gets a merchant so it can be a transfer",
+  "sender": "ICICIT-S(smsft)",
+  "received_at": "2026-03-24 06:05:00 +05:30",
+  "text": "Payment of Rs 4,535.00 has been received on your ICICI Bank Credit Card XX1005 through Bharat Bill Payment System on 23-MAR-26.",
+  "expect": {
+    "status": "parsed",
+    "profile": "icici/icici-card-bill-paid",
+    "direction": "credit",
+    "channel": "card",
+    "amount_paise": 453500,
+    "account": "1005",
+    "payee": "ICICI Bank Credit Card"
+  }
+}

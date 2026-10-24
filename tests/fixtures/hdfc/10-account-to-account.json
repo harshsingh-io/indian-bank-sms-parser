@@ -1,0 +1,16 @@
+{
+  "name": "transfer between two accounts",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2026-02-01 11:56:00 +05:30",
+  "text": "HDFC Bank:Rs. 14000.00 debited from a/c *1001 on 01/02/26 to a/c **1004 (UPI Ref No. 100000000369). Not you? Call on 18001234567",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-acct-transfer",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 1400000,
+    "account": "1001",
+    "payee": "1004",
+    "ref": "100000000369"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "a utility bill notice is not a payment",
+  "sender": "PAYZAP-S(smsft)",
+  "text": "Your EXAMPLE POWER URBAN (1000000001) bill of Rs 3448.00 is generated. Pay now on PayZapp. https://example.invalid/z",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

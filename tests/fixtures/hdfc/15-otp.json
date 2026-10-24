@@ -1,0 +1,9 @@
+{
+  "name": "otp is ignored and never stored",
+  "sender": "HDFCBK-S(smsft)",
+  "text": "123456 is your OTP for HDFC Bank NetBanking. Do not share it with anyone.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "otp"
+  }
+}

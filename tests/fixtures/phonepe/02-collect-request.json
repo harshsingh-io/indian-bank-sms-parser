@@ -1,0 +1,9 @@
+{
+  "name": "a UPI Circle payment request is not a payment",
+  "sender": "PHONPE-S(smsft)",
+  "text": "PhonePe UPI Circle payment request: 1948 has requested a payment of Rs.263 to EXAMPLE PIZZA. Click to approve https://example.invalid/f",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

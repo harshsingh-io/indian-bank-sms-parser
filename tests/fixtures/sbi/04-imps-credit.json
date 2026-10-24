@@ -1,0 +1,16 @@
+{
+  "name": "imps credit names the sender after the masked mobile",
+  "sender": "SBIBNK-S(smsft)",
+  "received_at": "2026-04-17 18:40:00 +05:30",
+  "text": "Dear Customer, Your a/c no. XXXXXXXX4338 is credited by Rs.2.00 on 17-04-26 by a/c linked to mobile 1XXXXXX111-EXAMPLE RIDES (IMPS Ref# 100000000010)-SBI",
+  "expect": {
+    "status": "parsed",
+    "profile": "sbi/sbi-imps-credit",
+    "direction": "credit",
+    "channel": "imps",
+    "amount_paise": 200,
+    "account": "4338",
+    "payee": "EXAMPLE RIDES",
+    "ref": "100000000010"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "otp is ignored and never stored",
+  "sender": "SBIOTP-S(smsft)",
+  "text": "123456 is the OTP for your SBI transaction. Never share it with anyone.-SBI",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "otp"
+  }
+}

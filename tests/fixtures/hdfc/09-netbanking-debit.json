@@ -1,0 +1,16 @@
+{
+  "name": "netbanking debit keeps only the readable part of Info",
+  "sender": "VM-HDFCBK-S",
+  "received_at": "2025-12-18 15:14:00 +05:30",
+  "text": "UPDATE: INR 12,990.00 debited from HDFC Bank XX1001 on 18-DEC-25. Info: EXAMPLEAMC/1000000000000221-XXXXXXXXXX8730. Avl bal:INR 99,999.99",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-netbanking-debit",
+    "direction": "debit",
+    "channel": "netbanking",
+    "amount_paise": 1299000,
+    "account": "1001",
+    "payee": "EXAMPLEAMC",
+    "no_balance_in_text": true
+  }
+}

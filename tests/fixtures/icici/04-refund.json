@@ -1,0 +1,14 @@
+{
+  "name": "merchant refund credited",
+  "sender": "ICICIT-S(smsft)",
+  "received_at": "2026-05-17 12:00:00 +05:30",
+  "text": "EXAMPLE STORE GROCERY refund of Rs 202.00 credited to ICICI Bank Card XX1005 on 17-MAY-26.",
+  "expect": {
+    "status": "parsed",
+    "profile": "icici/icici-refund",
+    "direction": "credit",
+    "channel": "card",
+    "amount_paise": 20200,
+    "payee": "EXAMPLE STORE GROCERY"
+  }
+}

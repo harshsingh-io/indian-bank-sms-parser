@@ -1,0 +1,44 @@
+{
+  "bank": "Generic fallback",
+  "id": "generic",
+  "senders": [],
+  "shortcut_keywords": ["debited", "credited", "spent", "Sent Rs"],
+  "_comment": [
+    "Last resort when no bank profile matched.",
+    "Transactions parsed here are never auto-categorized and are flagged in",
+    "Telegram as 'parsed with generic rules, check the amount', so these",
+    "patterns are allowed to be approximate where a bank profile may not be.",
+    "Text reaching these patterns has already been normalized, which rewrites",
+    "every ₹ / Rs / Rs. / INR to a literal 'Rs.' immediately before the digits.",
+    "No 'date' field on purpose: date formats vary too much between banks to",
+    "guess, so the phone's received_at is used instead."
+  ],
+  "templates": [
+    {
+      "id": "generic-credit",
+      "detect": "(?i)\\b(credited|refund(?:ed)?|received)\\b",
+      "direction": "credit",
+      "channel": null,
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)a\\/?c\\s*(?:no\\.?)?\\s*[*xX]*(?<account>\\d{3,6})",
+        "payee": "(?i)\\b(?:from|by)\\s+(?<payee>[A-Za-z0-9][A-Za-z0-9 .&'-]{2,40}?)(?=\\s*(?:$|\\n|\\bon\\b|\\bref\\b|\\bupi\\b|\\bavl\\b|[,.;]))",
+        "vpa": "(?i)(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?i)\\b(?:ref|rrn|utr|txn)(?:\\s*(?:no|id))?\\.?\\s*:?\\s*(?<ref>[A-Za-z0-9]{6,20})\\b"
+      }
+    },
+    {
+      "id": "generic-debit",
+      "detect": "(?i)\\b(debited|spent|sent|paid|withdrawn|purchase)\\b",
+      "direction": "debit",
+      "channel": null,
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)a\\/?c\\s*(?:no\\.?)?\\s*[*xX]*(?<account>\\d{3,6})",
+        "payee": "(?i)\\b(?:to|at|towards)\\s+(?<payee>[A-Za-z0-9][A-Za-z0-9 .&'-]{2,40}?)(?=\\s*(?:$|\\n|\\bon\\b|\\bref\\b|\\bupi\\b|\\bavl\\b|[,.;]))",
+        "vpa": "(?i)(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?i)\\b(?:ref|rrn|utr|txn)(?:\\s*(?:no|id))?\\.?\\s*:?\\s*(?<ref>[A-Za-z0-9]{6,20})\\b"
+      }
+    }
+  ]
+}

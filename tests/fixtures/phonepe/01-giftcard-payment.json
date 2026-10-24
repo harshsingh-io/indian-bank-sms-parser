@@ -1,0 +1,15 @@
+{
+  "name": "a gift card payment is spent from a PhonePe balance, so no bank sees it",
+  "sender": "PHONPE-S(smsft)",
+  "received_at": "2026-05-09 19:07:00 +05:30",
+  "text": "You've paid Rs.3 via PhonePe gift card to EXAMPLE HOSIERY on May 9, 2026 at 7:06:36 PM. Not you? Call us on 022-10000002. Remaining balance Rs.0.",
+  "expect": {
+    "status": "parsed",
+    "profile": "phonepe/phonepe-giftcard-payment",
+    "direction": "debit",
+    "channel": "wallet",
+    "amount_paise": 300,
+    "payee": "EXAMPLE HOSIERY",
+    "no_balance_in_text": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "standing instruction activation is not a transaction",
+  "sender": "ICICIT-S(smsft)",
+  "text": "We have activated Standing Instruction on ICICI Bank Credit Card 1005. Merchant: Example Saas, Maximum Amount: USD 150.00, Frequency: As Presented, Start Date: 28/04/2026, End Date: 28/04/2046, Mandate ID: ABCD1234.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

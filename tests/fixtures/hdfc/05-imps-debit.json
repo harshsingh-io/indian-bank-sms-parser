@@ -1,0 +1,16 @@
+{
+  "name": "imps transfer out to another account",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2026-09-10 12:30:00 +05:30",
+  "text": "IMPS INR 10,000.00\nsent from HDFC Bank A/c XX1001 on 10-09-26\nTo A/c xxxxxxxxxx1007\nRef-100000001037\nNot you?Call 18001234567/SMS BLOCK OB to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-imps-debit",
+    "direction": "debit",
+    "channel": "imps",
+    "amount_paise": 1000000,
+    "account": "1001",
+    "payee": "1007",
+    "ref": "100000001037"
+  }
+}

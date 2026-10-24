@@ -1,0 +1,9 @@
+{
+  "name": "cancelling a mandate is not a transaction",
+  "sender": "SBIUPI-S(smsft)",
+  "text": "Your UPI-Mandate is successfully cancelled towards EXAMPLE MUSIC LLP for 139.00 from A/c No.XXXXXX1001. UMN:payee1@ibl -SBI",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "bank": "PhonePe",
+  "id": "phonepe",
+  "senders": [
+    "PHONPE"
+  ],
+  "generic_fallback": false,
+  "shortcut_keywords": [
+    "You've paid Rs"
+  ],
+  "_comment": [
+    "Almost all PhonePe traffic is collect requests ('X has requested money'),",
+    "which the global rules already reject as pre_debit_notice. The one genuine",
+    "transaction type is a gift-card payment, which is spent from a PhonePe",
+    "balance rather than a bank account, so it appears in no bank's SMS and",
+    "would otherwise be missed entirely."
+  ],
+  "templates": [
+    {
+      "id": "phonepe-giftcard-payment",
+      "_note": "You've paid Rs.3 via PhonePe gift card to MERCHANT on May 9, 2026 at 7:06:36 PM. ... Remaining balance Rs.0.",
+      "detect": "(?i)You've\\s+paid\\s+Rs\\.[\\d,.]+\\s+via\\s+PhonePe",
+      "direction": "debit",
+      "channel": "wallet",
+      "fields": {
+        "amount": "(?i)You've\\s+paid\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)\\bto\\s+(?<payee>.+?)\\s+on\\s+[A-Z][a-z]{2}\\s+\\d{1,2},",
+        "date": "(?i)\\bon\\s+(?<date>[A-Z][a-z]{2}\\s+\\d{1,2},\\s+\\d{4})"
+      },
+      "date_format": "M j, Y"
+    }
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)initiated\\s+registration",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)UPI\\s+Circle\\s+payment\\s+request",
+      "reason": "pre_debit_notice"
+    }
+  ]
+}

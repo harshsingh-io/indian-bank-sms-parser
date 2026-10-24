@@ -1,0 +1,9 @@
+{
+  "name": "fake bank sms from an ordinary number is blocked",
+  "sender": "+919900112233",
+  "text": "Sent Rs.5,000.00\nFrom Example Bank A/C *1234\nTo EASTGATE FUELS\nOn 16/09/26\nRef 600000000012",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "sender_not_allowed"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "imps credit, balance stripped",
+  "sender": "VM-HDFCBK-S",
+  "received_at": "2025-10-17 10:00:00 +05:30",
+  "text": "Received!\nINR 5,000.00 in HDFC Bank A/c xx1001\nOn 17-10-25\nFor IMPS -EXAMPLE PAYMENTS LTD- 100000000034\nAvl bal INR 45,549.08",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-imps-credit",
+    "direction": "credit",
+    "channel": "imps",
+    "amount_paise": 500000,
+    "account": "1001",
+    "payee": "EXAMPLE PAYMENTS LTD",
+    "ref": "100000000034",
+    "no_balance_in_text": true
+  }
+}

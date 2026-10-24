@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.DS_Store
+
+# Never commit real messages or exports. Fixtures must be synthetic or
+# masked -- git history is permanent, and scrubbing later is not an option.
+samples/
+private/
+*.jsonl
+*.csv
+*.xlsx
+*.pdf
+*.vcf
+*.abbu/

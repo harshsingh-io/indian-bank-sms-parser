@@ -1,0 +1,13 @@
+{
+  "name": "refund credited",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.349.00 credited to Example Bank A/C *1234 as refund from GREEN CART on 17/09/26. Ref 600000000005",
+  "expect": {
+    "status": "parsed",
+    "direction": "credit",
+    "amount_paise": 34900,
+    "account": "1234",
+    "payee": "GREEN CART",
+    "ref": "600000000005"
+  }
+}

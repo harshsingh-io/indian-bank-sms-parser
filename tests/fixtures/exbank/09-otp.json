@@ -1,0 +1,9 @@
+{
+  "name": "otp is ignored and never stored",
+  "sender": "AX-EXBANK-S",
+  "text": "123456 is your OTP for Example Bank net banking. Do not share it with anyone.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "otp"
+  }
+}

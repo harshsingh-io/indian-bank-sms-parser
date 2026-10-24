@@ -1,0 +1,13 @@
+{
+  "name": "available balance is stripped from stored text",
+  "sender": "AX-EXBANK-S",
+  "text": "Sent Rs.180.00\nFrom Example Bank A/C *1234\nTo DAILY FRESH MART\nOn 16/09/26\nRef 600000000010\nAvl Bal Rs.45,231.80",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "amount_paise": 18000,
+    "payee": "DAILY FRESH MART",
+    "ref": "600000000010",
+    "no_balance_in_text": true
+  }
+}

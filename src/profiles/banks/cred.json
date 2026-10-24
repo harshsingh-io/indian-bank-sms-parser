@@ -1,0 +1,44 @@
+{
+  "bank": "CRED",
+  "id": "cred",
+  "senders": [
+    "CREDIN",
+    "CREDWL"
+  ],
+  "generic_fallback": false,
+  "shortcut_keywords": [
+    "credited to your CRED wallet"
+  ],
+  "_comment": [
+    "CRED traffic is entirely collect requests and reward notices. The collect",
+    "requests are caught by the global rule; these add the rest.",
+    "A collect request is money being ASKED for, not moved. Approving one",
+    "produces its own bank debit SMS, and most are never approved.",
+    "",
+    "A CRED wallet credit is a load, not income -- same treatment as a PayZapp",
+    "load, so a consumer should treat it as a transfer rather than spending."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)(cashback|reward|CRED\\s+coins|scratch\\s+card)",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)Click\\s+here\\s+to\\s+approve",
+      "reason": "pre_debit_notice"
+    }
+  ],
+  "templates": [
+    {
+      "id": "cred-wallet-load",
+      "_note": "Update from CRED wallet: Rs.243.00 has been successfully credited to your CRED wallet. Your updated ... balance is Rs.243.00.",
+      "detect": "(?i)credited\\s+to\\s+your\\s+CRED\\s+wallet",
+      "direction": "credit",
+      "channel": "wallet",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)\\s+has\\s+been",
+        "payee": "(?i)to\\s+your\\s+(?<payee>CRED\\s+wallet)"
+      }
+    }
+  ]
+}

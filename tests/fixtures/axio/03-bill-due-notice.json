@@ -1,0 +1,9 @@
+{
+  "name": "a Pay Later bill notice is money not yet moved",
+  "sender": "AXIOF-S(smsft)",
+  "text": "Your Pay Later bill of Rs 1338 will be debited on 5th of this month from registered bank a/c. View Bill https://example.invalid/c",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

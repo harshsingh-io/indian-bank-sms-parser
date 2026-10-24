@@ -1,0 +1,15 @@
+{
+  "name": "card spend at a merchant",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.2,499.00 spent on Example Bank Card XX5678 at BLUE LEAF STORES on 16/09/26. Ref 600000000003",
+  "expect": {
+    "status": "parsed",
+    "profile": "exbank/exbank-card",
+    "direction": "debit",
+    "channel": "card",
+    "amount_paise": 249900,
+    "account": "5678",
+    "payee": "BLUE LEAF STORES",
+    "ref": "600000000003"
+  }
+}

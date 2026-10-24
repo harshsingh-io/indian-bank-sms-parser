@@ -1,0 +1,12 @@
+{
+  "name": "a loan disbursal is the only record of that money arriving",
+  "sender": "ZYPECO-S(smsft)",
+  "text": "Dear customer, Rs.7500 Zype loan was successfully transferred to your registered bank account ending 1001 - Zype",
+  "expect": {
+    "status": "parsed",
+    "profile": "zype/zype-disbursal",
+    "amount_paise": 750000,
+    "direction": "credit",
+    "account": "1001"
+  }
+}

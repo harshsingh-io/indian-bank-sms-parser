@@ -1,0 +1,14 @@
+{
+  "name": "upi debit to a person by VPA",
+  "sender": "AX-EXBANK-S",
+  "text": "Sent Rs.1,250.50\nFrom Example Bank A/C *1234\nTo payee1@okexbank\nOn 16/09/26\nRef 600000000002",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 125050,
+    "account": "1234",
+    "vpa": "payee1@okexbank",
+    "ref": "600000000002"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "a Pay Later purchase is real spending with no bank sms anywhere",
+  "sender": "AXIOF-S(smsft)",
+  "received_at": "2026-03-02 10:00:00 +05:30",
+  "text": "Thank you for availing Pay Later credit of Rs274.0. For more info click https://example.invalid/a",
+  "expect": {
+    "status": "parsed",
+    "profile": "axio/axio-paylater-drawdown",
+    "direction": "debit",
+    "amount_paise": 27400,
+    "payee": "Pay Later"
+  }
+}

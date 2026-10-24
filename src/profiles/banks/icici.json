@@ -1,0 +1,134 @@
+{
+  "bank": "ICICI Bank",
+  "id": "icici",
+  "senders": [
+    "ICICIB",
+    "ICICIT",
+    "ICICIO"
+  ],
+  "shortcut_keywords": [
+    "spent using ICICI Bank Card",
+    "debited",
+    "credited"
+  ],
+  "_comment": [
+    "Written from ~200 real masked ICICI messages spanning Oct 2025 - Sep 2026.",
+    "Almost all traffic is credit card spend. Those carry an 'Avl Limit', which is",
+    "stripped before storage exactly like a balance.",
+    "NOTE: these card spends plus the later credit-card bill payment are",
+    "the classic double-count. Treat the bill payee as a transfer, not spending."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)Statement\\s+is\\s+sent\\s+to",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)(Total|Minimum)\\s+Amount\\s+Due",
+      "reason": "not_transaction"
+    }
+  ],
+  "templates": [
+    {
+      "id": "icici-card-spend",
+      "_note": "Rs.474.00 spent using ICICI Bank Card XX1002 on 01-Jun-26 on MERCHANT. Avl Limit: Rs.84,701.00.",
+      "detect": "(?i)spent\\s+using\\s+ICICI\\s+Bank\\s+Card",
+      "direction": "debit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)^Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)\\s+spent",
+        "account": "(?i)Card\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)on\\s+\\d{1,2}-[A-Za-z]{3}-\\d{2}\\s+on\\s+(?<payee>[^.\\n]{2,60})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\s+on\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-card-spend-alt",
+      "_note": "Rs.16,275.00 spent on ICICI Bank Card XX1005 on 15-Aug-26 at MERCHANT Avl Lmt: Rs.53,789.23",
+      "detect": "(?i)spent\\s+on\\s+ICICI\\s+Bank\\s+Card",
+      "direction": "debit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?im)^Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)\\s+spent",
+        "account": "(?i)Card\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bat\\s+(?<payee>.+?)(?=\\s*(?:Avl|$|\\n|\\.))",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-card-bill-paid",
+      "_note": [
+        "Payment of Rs.4,535.00 has been received on your ICICI Bank Credit Card XX1005 ... on 23-MAR-26.",
+        "This is you paying your own card bill. It pairs with a debit",
+        "from the funding bank, so treat it as a transfer, or the",
+        "same money is counted twice."
+      ],
+      "detect": "(?i)Payment\\s+of\\s+Rs\\.[\\d,.]+\\s+has\\s+been\\s+received\\s+on\\s+your",
+      "direction": "credit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)Payment\\s+of\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)Credit\\s+Card\\s*[xX*]*(?<account>\\d{3,4})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b",
+        "payee": "(?i)(?<payee>ICICI\\s+Bank\\s+Credit\\s+Card)"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-refund",
+      "_note": "MERCHANT refund of Rs 760.00 credited to A/c on 16-AUG-26.",
+      "detect": "(?i)refund\\s+of\\s+Rs\\.",
+      "direction": "credit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)refund\\s+of\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?im)^(?<payee>.+?)\\s+refund\\s+of\\s+Rs\\.",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-acct-debit",
+      "_note": "Rs.X debited from ICICI Bank Account XX1002 on DD-Mon-YY.",
+      "detect": "(?i)debited\\s+from\\s+ICICI",
+      "direction": "debit",
+      "channel": "netbanking",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)Account\\s*[xX*]*(?<account>\\d{3,4})",
+        "payee": "(?i);\\s*(?<payee>[^.\\n]{2,60})\\s+credited",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-acct-credit",
+      "_note": "Rs.X credited to ICICI Bank Account XX1002 on DD-Mon-YY.",
+      "detect": "(?i)credited\\s+to\\s+ICICI",
+      "direction": "credit",
+      "channel": "netbanking",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)Account\\s*[xX*]*(?<account>\\d{3,4})",
+        "date": "(?i)\\bon\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b"
+      },
+      "date_format": "d-M-y"
+    },
+    {
+      "id": "icici-reversal",
+      "_note": "your transaction of Rs.1,234.00 on ICICI Bank Credit Card XX0000 at A MERCHANT dated 08-Aug-26 at 19:31:50 PM has been reversed.",
+      "detect": "(?i)transaction\\s+of\\s+Rs\\.[\\d,.]+\\s+on\\s+ICICI\\s+Bank[\\s\\S]*has\\s+been\\s+reversed",
+      "direction": "credit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)transaction\\s+of\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)\\bat\\s+(?<payee>.+?)\\s+dated\\b",
+        "date": "(?i)\\bdated\\s+(?<date>\\d{1,2}-[A-Za-z]{3}-\\d{2})\\b",
+        "account": "(?i)Card\\s+XX(?<account>\\d{4})"
+      },
+      "date_format": "d-M-y"
+    }
+  ]
+}

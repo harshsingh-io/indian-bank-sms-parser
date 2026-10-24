@@ -1,0 +1,16 @@
+{
+  "name": "upi credit received",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2025-10-04 11:03:00 +05:30",
+  "text": "Credit Alert!\nRs.1,150.00 credited to HDFC Bank A/c XX1001 on 04-10-25 from VPA payee2@axl (UPI 100000000003)",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-credit-alert",
+    "direction": "credit",
+    "channel": "upi",
+    "amount_paise": 115000,
+    "account": "1001",
+    "vpa": "payee2@axl",
+    "ref": "100000000003"
+  }
+}

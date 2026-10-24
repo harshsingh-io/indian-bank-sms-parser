@@ -1,0 +1,14 @@
+{
+  "name": "a CRED wallet load reads the amount, not the balance quoted after it",
+  "sender": "CREDWL-S(smsft)",
+  "received_at": "2026-06-01 10:00:00 +05:30",
+  "text": "Update from CRED wallet: Rs.208.00 has been successfully credited to your CRED wallet. Your updated CRED wallet balance is Rs.243.00. For any queries or support, call 080-10000000.",
+  "expect": {
+    "status": "parsed",
+    "profile": "cred/cred-wallet-load",
+    "direction": "credit",
+    "channel": "wallet",
+    "amount_paise": 20800,
+    "payee": "CRED wallet"
+  }
+}

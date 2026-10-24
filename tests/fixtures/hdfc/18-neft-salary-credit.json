@@ -1,0 +1,16 @@
+{
+  "name": "an incoming NEFT is salary, and the bank sends no other sms for it",
+  "sender": "VM-HDFCBK-S",
+  "received_at": "2026-09-02 11:00:00 +05:30",
+  "text": "Update! INR 50,000.00 deposited in HDFC Bank A/c XX1001 on 02-SEP-26 for NEFT Cr-EXBK0001234-EXAMPLE PAYROLL SERVICES-Account Holder-EXBK0000000000001.Avl bal INR 99,999.99. Cheque deposits in A/C are subject to clearing.",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-neft-credit",
+    "direction": "credit",
+    "channel": "netbanking",
+    "amount_paise": 5000000,
+    "account": "1001",
+    "payee": "EXAMPLE PAYROLL SERVICES",
+    "no_balance_in_text": true
+  }
+}

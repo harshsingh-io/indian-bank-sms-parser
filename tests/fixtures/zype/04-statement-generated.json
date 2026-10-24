@@ -1,0 +1,9 @@
+{
+  "name": "a monthly statement notice is not a payment",
+  "sender": "ZYPECO-S(smsft)",
+  "text": "Dear customer, your Zype loan statement has been generated. Due Date: 05/10/2026 Due Amount: Rs.941. Open the app to pay.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

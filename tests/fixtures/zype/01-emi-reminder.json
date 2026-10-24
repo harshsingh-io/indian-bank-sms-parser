@@ -1,0 +1,9 @@
+{
+  "name": "an EMI reminder is not a payment",
+  "sender": "ZYPEIN-S(smsft)",
+  "text": "Complete your EMI payment of Rs.941 before your due date to avoid overdue interest and late payment penalty charges. Pay Now: https://example.invalid/d - Zype",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

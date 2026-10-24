@@ -1,0 +1,11 @@
+{
+  "name": "rupee sign and indian digit grouping",
+  "sender": "AX-EXBANK-S",
+  "text": "Sent ₹1,23,456.78\nFrom Example Bank A/C *1234\nTo KIRAN ELECTRICALS\nOn 16/09/26\nRef 600000000014",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "amount_paise": 12345678,
+    "payee": "KIRAN ELECTRICALS"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "wallet load is a transfer in, not income",
+  "sender": "PAYZAP-S(smsft)",
+  "received_at": "2025-10-08 13:38:00 +05:30",
+  "text": "Rs.2500\ncredited to your PayZapp Wallet\nOn 08-10-2025 13:37:18\nBal:Rs.2500\nNot you? Report:https://example.invalid/y -HDFC Bank",
+  "expect": {
+    "status": "parsed",
+    "profile": "payzapp/payzapp-wallet-load",
+    "direction": "credit",
+    "channel": "wallet",
+    "amount_paise": 250000,
+    "payee": "PayZapp Wallet",
+    "no_balance_in_text": true
+  }
+}

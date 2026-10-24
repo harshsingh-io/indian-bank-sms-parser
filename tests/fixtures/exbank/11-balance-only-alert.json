@@ -1,0 +1,9 @@
+{
+  "name": "balance-only alert is not a transaction",
+  "sender": "AX-EXBANK-S",
+  "text": "Avl Bal in Example Bank A/C *1234 is Rs.45,231.80 as on 16/09/26.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

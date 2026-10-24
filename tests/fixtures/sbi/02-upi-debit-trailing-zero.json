@@ -1,0 +1,14 @@
+{
+  "name": "305.0 is 305 rupees 0 paise, not 3 rupees 5 paise",
+  "sender": "VM-SBIUPI-S",
+  "received_at": "2026-02-11 10:05:00 +05:30",
+  "text": "Dear UPI user A/C X1001 debited by 3000.00 on date 11Feb26 trf to DAILY FRESH MART Refno 100000000007 If not u? call-18001234567 for other services-9223766666-SBI",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "amount_paise": 300000,
+    "account": "1001",
+    "payee": "DAILY FRESH MART",
+    "ref": "100000000007"
+  }
+}

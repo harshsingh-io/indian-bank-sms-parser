@@ -1,0 +1,9 @@
+{
+  "name": "a collect request is money not yet moved",
+  "sender": "SBIUPI-S(smsft)",
+  "text": "EXAMPLE FD JOURNEY has requested Rs10000 frm u on a UPI app. Once approved, money will be debited frm ur a/c -SBI",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

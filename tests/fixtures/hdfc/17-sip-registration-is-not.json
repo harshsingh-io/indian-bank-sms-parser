@@ -1,0 +1,9 @@
+{
+  "name": "registering a SIP moves no money",
+  "sender": "HDFCBK-S(smsft)",
+  "text": "You made a Smart Move!\nYour Monthly SIP request is registered on HDFC Bank SmartWealth!\nSIP: Rs. 1000.0\nIn MF: EXAMPLE FLEXI CAP FUND\nFrom 23/05/2026 to 23/04/2056",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

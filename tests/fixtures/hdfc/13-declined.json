@@ -1,0 +1,9 @@
+{
+  "name": "declined upi transaction is not a transaction",
+  "sender": "VM-HDFCBK-S",
+  "text": "UPI Transaction Declined for your HDFC Bank\naccount ending 1001 for security reasons.For\nassistance, Call 18001234567",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "failed"
+  }
+}

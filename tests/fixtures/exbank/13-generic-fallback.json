@@ -1,0 +1,15 @@
+{
+  "name": "known bank, unknown message shape, falls back to generic",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.640.00 debited from Example Bank A/C *9876 to LOTUS PHARMACY on 16/09/26. UPI Ref 600000000013",
+  "expect": {
+    "status": "parsed",
+    "generic": true,
+    "profile": "generic/generic-debit",
+    "direction": "debit",
+    "amount_paise": 64000,
+    "account": "9876",
+    "payee": "LOTUS PHARMACY",
+    "ref": "600000000013"
+  }
+}

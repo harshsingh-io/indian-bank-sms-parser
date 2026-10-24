@@ -1,0 +1,15 @@
+{
+  "name": "wallet spend names no merchant, so it stays merchantless on purpose",
+  "sender": "PAYZAP-S(smsft)",
+  "received_at": "2025-10-08 13:38:00 +05:30",
+  "text": "Rs.60 debited from your PayZapp Wallet on 08-10-2025 13:37:29\nBal: Rs.2440\nNot you?  Report:\nhttps://example.invalid/x or SMS BLOCKPZW to 5676712",
+  "expect": {
+    "status": "parsed",
+    "profile": "payzapp/payzapp-wallet-spend",
+    "direction": "debit",
+    "channel": "wallet",
+    "amount_paise": 6000,
+    "payee": null,
+    "no_balance_in_text": true
+  }
+}

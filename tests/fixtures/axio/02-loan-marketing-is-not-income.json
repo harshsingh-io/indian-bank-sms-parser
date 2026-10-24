@@ -1,0 +1,9 @@
+{
+  "name": "loan marketing must never become a 4 lakh rupee income",
+  "sender": "AXIOF-S(smsft)",
+  "text": "Service Update Customer, We have received your repayment towards your Pay Later a/c on 5th March. You got a Personal loan upto Rs 4,00,000. Click to know more https://example.invalid/b",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

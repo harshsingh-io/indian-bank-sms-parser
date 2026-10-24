@@ -1,0 +1,16 @@
+{
+  "name": "atm withdrawal, balance stripped",
+  "sender": "JX-HDFCBK-S",
+  "received_at": "2025-10-24 21:07:00 +05:30",
+  "text": "Withdrawn Rs.800 From HDFC Bank Card x1002 At EXAMPLE ATM NAGAR On 2025-10-24:21:06:54 Bal Rs.40043.08 Not You? Call 18001234567/SMS BLOCK DC 3271 to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-atm",
+    "direction": "debit",
+    "channel": "atm",
+    "amount_paise": 80000,
+    "account": "1002",
+    "payee": "EXAMPLE ATM NAGAR",
+    "no_balance_in_text": true
+  }
+}

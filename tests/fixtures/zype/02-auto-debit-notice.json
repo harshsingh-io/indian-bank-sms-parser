@@ -1,0 +1,9 @@
+{
+  "name": "auto-debit wording is still a pre-debit notice",
+  "sender": "ZYPEIN-S(smsft)",
+  "text": "Dear customer, your Zype loan EMI of Rs.941 will be auto-debited from your bank account on 5th July 2026. Maintain sufficient balance - Zype",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

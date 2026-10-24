@@ -1,0 +1,16 @@
+{
+  "name": "the other card spend wording, Avl Lmt stripped",
+  "sender": "ICICIT-S(smsft)",
+  "received_at": "2026-08-15 12:39:00 +05:30",
+  "text": "Rs 16,275.00 spent on ICICI Bank Card XX1005 on 15-Aug-26 at GREEN CART Avl Lmt: Rs 53,789.23. To block, call 18002662.",
+  "expect": {
+    "status": "parsed",
+    "profile": "icici/icici-card-spend-alt",
+    "direction": "debit",
+    "channel": "card",
+    "amount_paise": 1627500,
+    "account": "1005",
+    "payee": "GREEN CART",
+    "no_balance_in_text": true
+  }
+}

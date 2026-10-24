@@ -1,0 +1,8 @@
+{
+  "name": "an unmatched wallet message is unparsed, never guessed into a transaction",
+  "sender": "PAYZAP-S(smsft)",
+  "text": "Important update on your Wallet. There will be changes in Wallet usage of Rs.500 coming into effect after 45 days.",
+  "expect": {
+    "status": "unparsed"
+  }
+}

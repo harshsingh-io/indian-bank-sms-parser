@@ -1,0 +1,16 @@
+{
+  "name": "debit card spend has no card number",
+  "sender": "AD-HDFCBK-S",
+  "received_at": "2025-12-16 09:41:00 +05:30",
+  "text": "Spent Rs.2 From DAILY FRESH MART On 2025-12-16:09:40:54 Bal Rs.95853.26 Not You? Call 18001234567/SMS BLOCK DC 3271 to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "profile": "hdfc/hdfc-dc-spend",
+    "direction": "debit",
+    "channel": "card",
+    "amount_paise": 200,
+    "account": null,
+    "payee": "DAILY FRESH MART",
+    "no_balance_in_text": true
+  }
+}

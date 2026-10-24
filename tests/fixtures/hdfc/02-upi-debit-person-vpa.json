@@ -1,0 +1,16 @@
+{
+  "name": "upi debit to a person, keyed by VPA",
+  "sender": "HDFCBK-S(smsft)",
+  "received_at": "2025-10-03 19:22:00 +05:30",
+  "text": "Sent Rs.1,250.50\nFrom HDFC Bank A/C *1001\nTo payee1@okhdfcbank\nOn 03/10/25\nRef 100000000002\nNot You?\nCall 18001234567/SMS BLOCK UPI to 7308080808",
+  "expect": {
+    "status": "parsed",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 125050,
+    "account": "1001",
+    "payee": "payee1@okhdfcbank",
+    "vpa": "payee1@okhdfcbank",
+    "ref": "100000000002"
+  }
+}

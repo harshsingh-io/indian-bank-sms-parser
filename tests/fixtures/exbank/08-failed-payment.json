@@ -1,0 +1,9 @@
+{
+  "name": "failed payment is not a transaction",
+  "sender": "AX-EXBANK-S",
+  "text": "Your payment of Rs.750.00 to HILLSIDE DINER has failed. Ref 600000000008",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "failed"
+  }
+}

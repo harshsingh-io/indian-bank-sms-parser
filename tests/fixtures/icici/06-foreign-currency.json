@@ -1,0 +1,9 @@
+{
+  "name": "foreign currency charge is ignored, never mis-parsed as the credit limit",
+  "sender": "ICICIT-S(smsft)",
+  "text": "USD 5.90 spent using ICICI Bank Card XX1005 on 28-Apr-26 on EXAMPLE SAAS. Avl Limit: INR 86,950.10. If not you, call 1800 2662/SMS BLOCK 6009 to 9215676766.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "foreign_currency"
+  }
+}

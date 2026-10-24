@@ -1,0 +1,9 @@
+{
+  "name": "a bare balance alert is still ignored",
+  "sender": "SBIBNK-S(smsft)",
+  "text": "Your A/C XXXXX100002 has Avl Bal Rs 20,407.29 as on 03/12/25.-SBI",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

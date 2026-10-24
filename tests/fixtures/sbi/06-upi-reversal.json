@@ -1,0 +1,17 @@
+{
+  "name": "a reversal says 'credit' not 'credited' and must not be read as a balance alert",
+  "sender": "SBIUPI-S(smsft)",
+  "received_at": "2025-12-03 11:30:00 +05:30",
+  "text": "Your A/C XXXXX100002 has credit for UPI/REVERSAL/100000000005/0112 of Rs 2.00 on 03/12/25. Avl Bal Rs 20,407.29.-SBI",
+  "expect": {
+    "status": "parsed",
+    "profile": "sbi/sbi-upi-reversal",
+    "direction": "credit",
+    "channel": "upi",
+    "amount_paise": 200,
+    "account": "100002",
+    "payee": "UPI/REVERSAL",
+    "ref": "100000000005",
+    "no_balance_in_text": true
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "bank": "Axio (Pay Later)",
+  "id": "axio",
+  "senders": [
+    "AXIO"
+  ],
+  "generic_fallback": false,
+  "shortcut_keywords": [
+    "availing Pay Later credit"
+  ],
+  "_comment": [
+    "Axio sends bill notices, repayment confirmations and loan marketing.",
+    "",
+    "WHY generic_fallback IS false AND THE IGNORES MATTER: 'We have received",
+    "your repayment ... You got a Personal loan upto Rs 4,00,000' contains the",
+    "word 'received' and an amount. Allowlisting this sender without both guards",
+    "lets the generic credit template match it and invent a 4 lakh rupee income.",
+    "",
+    "'Thank you for availing Pay Later credit of Rs274.0' is a REAL purchase: the",
+    "lender pays the merchant, so it produces no bank SMS anywhere and is",
+    "invisible unless captured here. The same caution applies to the other side --",
+    "the monthly repayment leaves a bank account and must be a `transfer`, or the",
+    "same spending is counted twice.",
+    "",
+    "The message names no merchant, so 'Pay Later' is the only payee available.",
+    "A field pattern extracts from the text; it cannot inject a constant."
+  ],
+  "ignore": [
+    {
+      "pattern": "(?i)Pay\\s+Later\\s+bill",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)received\\s+your(\\s+\\w+)?\\s+repayment",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)(personal\\s+loan|loan\\s+upto|credit\\s+limit\\s+of|eligibility\\s+update)",
+      "reason": "not_transaction"
+    },
+    {
+      "pattern": "(?i)(View\\s+Bill|Pay\\s+Now|Service\\s+(Update|Notice))",
+      "reason": "not_transaction"
+    }
+  ],
+  "templates": [
+    {
+      "id": "axio-paylater-drawdown",
+      "_note": "Thank you for availing Pay Later credit of Rs274.0. For more info click ...",
+      "detect": "(?i)availing\\s+Pay\\s+Later\\s+credit\\s+of\\s+Rs\\.",
+      "direction": "debit",
+      "channel": "other",
+      "fields": {
+        "amount": "(?i)availing\\s+Pay\\s+Later\\s+credit\\s+of\\s+Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "payee": "(?i)availing\\s+(?<payee>Pay\\s+Later)\\s+credit"
+      }
+    }
+  ]
+}

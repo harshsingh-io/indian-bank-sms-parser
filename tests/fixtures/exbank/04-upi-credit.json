@@ -1,0 +1,14 @@
+{
+  "name": "upi credit received",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.5,000.00 credited to Example Bank A/C *1234 from CHANDRA TRADERS on 16/09/26. Ref 600000000004",
+  "expect": {
+    "status": "parsed",
+    "profile": "exbank/exbank-credit",
+    "direction": "credit",
+    "amount_paise": 500000,
+    "account": "1234",
+    "payee": "CHANDRA TRADERS",
+    "ref": "600000000004"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "mandate registration is not a transaction",
+  "sender": "HDFCBK-S(smsft)",
+  "text": "Your UPI-Mandate for Rs 119.00 is successfully created towards EXAMPLE MEDIA SERVICES from A/c No: **1001. UMN:payee1@pthdfc. If not you, kindly report on 18001234567.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "not_transaction"
+  }
+}

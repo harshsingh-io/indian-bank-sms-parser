@@ -1,0 +1,9 @@
+{
+  "name": "e-mandate pre-debit notice is not a transaction",
+  "sender": "HDFCBK-S(smsft)",
+  "text": "E-Mandate!\nRs.941.00 will be deducted on 04/07/26, 00:00:00\nFor EXAMPLE FINANCIAL SERVICES mandate\nUMN payee1@axl\nMaintain Balance\n-HDFC Bank",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

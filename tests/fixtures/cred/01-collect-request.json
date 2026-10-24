@@ -1,0 +1,9 @@
+{
+  "name": "a collect request is money being asked for, not moved",
+  "sender": "CREDIN-S(smsft)",
+  "text": "EXAMPLE STORE LIMITED has requested money from you on CRED.\n\nOn approving the request, Rs.49 will be debited from your account\n\nClick here to approve: https://example.invalid/e",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}

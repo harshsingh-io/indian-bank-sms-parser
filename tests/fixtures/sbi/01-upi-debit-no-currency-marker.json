@@ -1,0 +1,16 @@
+{
+  "name": "upi debit where the amount has no Rs marker at all",
+  "sender": "SBIUPI-S(smsft)",
+  "received_at": "2025-10-08 14:20:00 +05:30",
+  "text": "Dear UPI user A/C X1001 debited by 305.0 on date 08Oct25 trf to AAHARA CAFE Refno 100000000001 If not u? call-18001234567 for other services-9223766666-SBI",
+  "expect": {
+    "status": "parsed",
+    "profile": "sbi/sbi-upi-debit",
+    "direction": "debit",
+    "channel": "upi",
+    "amount_paise": 30500,
+    "account": "1001",
+    "payee": "AAHARA CAFE",
+    "ref": "100000000001"
+  }
+}

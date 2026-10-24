@@ -1,0 +1,90 @@
+{
+  "bank": "Example Bank",
+  "id": "exbank",
+  "example": true,
+  "senders": [
+    "EXBANK"
+  ],
+  "shortcut_keywords": [
+    "Sent Rs",
+    "debited",
+    "credited",
+    "spent",
+    "withdrawn"
+  ],
+  "_comment": [
+    "A SYNTHETIC bank, not a real one.",
+    "It exists so the parser, the fixtures and the ingest pipeline are covered",
+    "by tests before any real bank profile exists, and so a contributor has a",
+    "worked example to copy. Real profiles go alongside it as banks/<bank>.json",
+    "and must be written against real masked samples, never guessed.",
+    "Backslashes are doubled because this is JSON. Patterns use PCRE named",
+    "groups. Text has already been normalized: every ₹ / Rs / Rs. / INR has",
+    "become a literal 'Rs.' immediately before the digits."
+  ],
+  "templates": [
+    {
+      "id": "exbank-upi-debit",
+      "detect": "(?im)^Sent\\s+Rs\\.",
+      "direction": "debit",
+      "channel": "upi",
+      "ignore": [
+        {
+          "pattern": "(?i)will be debited",
+          "reason": "pre_debit_notice"
+        }
+      ],
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[*xX]*(?<account>\\d{3,4})",
+        "payee": "(?im)^To\\s+(?<payee>.+)$",
+        "vpa": "(?i)(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?i)Ref(?:\\s*No)?\\.?\\s*(?<ref>\\d{12})",
+        "date": "(?i)On\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})"
+      },
+      "date_format": "d/m/y"
+    },
+    {
+      "id": "exbank-card",
+      "detect": "(?i)\\bspent\\b[\\s\\S]{0,40}\\bcard\\b",
+      "direction": "debit",
+      "channel": "card",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)card\\s*(?:no\\.?)?\\s*[*xX]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bat\\s+(?<payee>[A-Za-z0-9][A-Za-z0-9 .&'-]{2,40}?)(?=\\s*(?:$|\\n|\\bon\\b|\\bref\\b|[,.;]))",
+        "ref": "(?i)Ref(?:\\s*No)?\\.?\\s*(?<ref>\\d{12})",
+        "date": "(?i)On\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})"
+      },
+      "date_format": "d/m/y"
+    },
+    {
+      "id": "exbank-atm",
+      "detect": "(?i)\\bwithdrawn\\b[\\s\\S]{0,60}\\bATM\\b",
+      "direction": "debit",
+      "channel": "atm",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[*xX]*(?<account>\\d{3,4})",
+        "ref": "(?i)Ref(?:\\s*No)?\\.?\\s*(?<ref>\\d{12})",
+        "date": "(?i)On\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})"
+      },
+      "date_format": "d/m/y"
+    },
+    {
+      "id": "exbank-credit",
+      "detect": "(?i)\\b(credited|refund(?:ed)?)\\b",
+      "direction": "credit",
+      "channel": "upi",
+      "fields": {
+        "amount": "(?i)Rs\\.\\s?(?<amount>[\\d,]+(?:\\.\\d{1,2})?)",
+        "account": "(?i)A\\/?C\\s*[*xX]*(?<account>\\d{3,4})",
+        "payee": "(?i)\\bfrom\\s+(?<payee>[A-Za-z0-9][A-Za-z0-9 .&'-]{2,40}?)(?=\\s*(?:$|\\n|\\bon\\b|\\bref\\b|\\bavl\\b|[,.;]))",
+        "vpa": "(?i)(?<vpa>[a-z0-9._\\-]{2,}@[a-z]{2,})",
+        "ref": "(?i)Ref(?:\\s*No)?\\.?\\s*(?<ref>\\d{12})",
+        "date": "(?i)On\\s+(?<date>\\d{2}\\/\\d{2}\\/\\d{2})"
+      },
+      "date_format": "d/m/y"
+    }
+  ]
+}

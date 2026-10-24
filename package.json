@@ -1,0 +1,23 @@
+{
+  "name": "indian-bank-sms-parser",
+  "version": "0.1.0",
+  "description": "Turn Indian bank and wallet SMS alerts into structured transactions. Zero dependencies, bank behaviour in JSON, runs anywhere fetch does.",
+  "keywords": [
+    "india", "sms", "bank", "upi", "parser", "transactions",
+    "expense-tracker", "hdfc", "sbi", "icici", "fintech"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": ["src", "README.md", "CONTRIBUTING.md", "LICENSE"],
+  "scripts": {
+    "test": "node tests/run.mjs"
+  },
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

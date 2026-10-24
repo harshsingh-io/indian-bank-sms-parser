@@ -1,0 +1,9 @@
+{
+  "name": "pre-debit mandate notice is not a transaction",
+  "sender": "AX-EXBANK-S",
+  "text": "Rs.199.00 will be debited from Example Bank A/C *1234 on 20/09/26 towards your monthly mandate.",
+  "expect": {
+    "status": "ignored",
+    "ignore_reason": "pre_debit_notice"
+  }
+}
